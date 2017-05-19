@@ -1,0 +1,26 @@
+case class {{classname}} (
+  {{#vars}}
+  {{#description}}
+  /* {{{description}}} */
+  {{/description}}
+  {{{name}}}: {{^required}}Option[{{/required}}{{^isEnum}}{{datatype}}{{/isEnum}}{{#isEnum}}{{classname}}{{datatypeWithEnum}}{{/isEnum}}{{^required}}] = None{{/required}}{{#hasMore}},{{/hasMore}}
+  {{/vars}}
+)
+{{#hasEnums}}
+{{#vars}}
+{{#isEnum}}
+
+case class {{classname}}{{datatypeWithEnum}}(@JsonValue value: String)
+object {{classname}}{{datatypeWithEnum}} {
+  // TODO. Turn this string into an enumeration. Here are the values:
+  {{#allowableValues}}{{#values}}
+  // val _{{.}} = Value("{{.}}"){{/values}}{{/allowableValues}}
+
+  @JsonCreator
+  def create(value: String) = {
+    {{classname}}{{datatypeWithEnum}}(value)
+  }
+}
+{{/isEnum}}
+{{/vars}}
+{{/hasEnums}}

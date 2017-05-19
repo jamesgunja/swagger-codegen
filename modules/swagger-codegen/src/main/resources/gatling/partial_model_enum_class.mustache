@@ -1,0 +1,11 @@
+case class {{classname}}(@JsonValue value: String)
+object {{classname}} {
+  // TODO. Turn this string into an enumeration. Here are the values:
+  {{#allowableValues}}{{#values}}
+  // val _{{.}} = Value("{{.}}"){{/values}}{{/allowableValues}}
+
+  @JsonCreator
+  def create(value: String) = {
+    {{classname}}(value)
+  }
+}

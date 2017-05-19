@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+group = 'io.swagger'
+
+description = """swagger-scala-client"""
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'io.gatling', name: 'gatling-app', version:'2.2.5'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.10', version:'2.8.6'
+    compile group: 'com.sun.jersey', name: 'jersey-client', version:'1.19'
+    compile group: 'com.sun.jersey.contribs', name: 'jersey-multipart', version:'1.19'
+    compile group: 'org.jfarcand', name: 'jersey-ahc-client', version:'1.0.5'
+    compile group: 'org.scala-lang', name: 'scala-library', version:'2.11.8'
+    compile group: 'io.swagger', name: 'swagger-core', version:'1.5.9'
+    compile group: 'joda-time', name: 'joda-time', version:'2.2'
+    compile group: 'org.joda', name: 'joda-convert', version:'1.2'
+    testCompile group: 'org.scalatest', name: 'scalatest_2.10', version:'2.2.4'
+    testCompile group: 'junit', name: 'junit', version:'4.8.1'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task packageTests(type: Jar) {
+  from sourceSets.test.output
+  classifier = 'tests'
+}
+
+artifacts.archives packageTests

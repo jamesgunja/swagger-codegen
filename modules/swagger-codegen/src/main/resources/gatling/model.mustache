@@ -1,0 +1,12 @@
+{{>licenseInfo}}
+package {{package}}
+
+{{#imports}}import {{import}}
+{{/imports}}
+import com.fasterxml.jackson.annotation.{JsonCreator, JsonValue}
+
+{{#models}}
+{{#model}}
+{{#isEnum}}{{>partial_model_enum_class}}{{/isEnum}}{{^isEnum}}{{>partial_model_generic}}{{/isEnum}}
+{{/model}}
+{{/models}}
